@@ -38,7 +38,7 @@ const projects = [
     imgSrc: "/project-1.png",
     title: "Web Dev Portfolio",
     tags: ["Web-design", "Development"],
-    projectLink: "https://my-portfolio-e290.onrender.com",
+    projectLink: "https://portfolio-clwv.onrender.com/",
     projectCode: "https://github.com/JRDF08/Projects/tree/main/Portfolio",
   },
 ];
