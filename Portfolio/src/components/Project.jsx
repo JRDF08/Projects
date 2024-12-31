@@ -32,15 +32,14 @@ const projects = [
     tags: ["Development", "API"],
     projectLink: "https://soundscape-86ox.onrender.com/",
     projectCode:
-      "https://gitlab.com/uplift-code-camp/students/batch-22/john-rey-fernandez/projects/-/tree/p2-js-api-app/p2-js-api-app",
+      "https://github.com/JRDF08/Projects/tree/main/Vanilla%20JS%20App",
   },
   {
     imgSrc: "/project-1.png",
     title: "Web Dev Portfolio",
     tags: ["Web-design", "Development"],
     projectLink: "https://my-portfolio-e290.onrender.com",
-    projectCode:
-      "https://gitlab.com/uplift-code-camp/students/batch-22/john-rey-fernandez/projects/-/tree/p1-web-dev-portfolio/p1-web-dev-portfolio",
+    projectCode: "https://github.com/JRDF08/Projects/tree/main/Portfolio",
   },
 ];
 
