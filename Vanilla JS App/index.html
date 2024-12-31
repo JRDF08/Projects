@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: Vanilla JS App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header id="header">
+        <h1 id="icon-header"><img src="./images/spotify.png" alt="spotify_icon"><a>SoundScape</a></img></h1>
+
+        <div id="searchbtn-header">
+            <form class="search">
+                <input id="search-btn" type="text" placeholder="What do you want to play?" name="search">
+            </form>
+        </div>
+
+        <button id="about-btn">About</button>
+    </header>
+
+    <main>
+        <div>
+            <div id="loading">Loading. Please Wait...</div>
+            <div id="feedback"></div>
+        </div>
+
+        <div id="about-sec">
+            <h1 id="name-app">SoundScape (Spotify-Inspired App)</h1>
+            <div id="description-app">
+                <h3>Description:</h3>
+                <p>SoundScape is a personalized music discovery app built using the Spotify API, designed to enhance your listening experience. Connect your Spotify account to access millions of songs, albums, and playlists while enjoying a unique interface with features. With SoundScape, you can explore your favorite tracks in new ways, discover hidden gems, and enjoy a more curated and interactive experience.</p>
+    
+                <h3>How to use:</h3>
+                <p>Create an Account or Login</p>
+                <li>Click start button located at the bottom part of the app and sign up for a new account using your email address, phone number, Facebook, Apple, or Google account.
+                </li>
+                <li>If you already have an account, simply login with your credentials.</li>
+
+                <p>Button</p>
+                <li>You can click the icon or the name of the app "SoundScape" located at the left top of the app to go back to the Top Playlist.</li>
+                <li>Use the Search Button located at top middle of the app to find specific songs, artists, albums or podcasts.</li>
+                <li>You can click "About Button" located at the top right of the app in order to go back on this "About-App Section".</li>
+
+                <p>Explore Music and Podcasts</p>
+                <li>Upon login you will redirect to Top Playlist recommended by Spotify API.</li>
+                <li>Explore curated playlists, genres, moods, or charts to discover new music.</li>
+    
+                <button id="login-app">Start</button>
+            </div>
+        </div>
+        
+        <h1 id ="title-header"></h1>
+        
+        <div id="content"></div>
+    
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
