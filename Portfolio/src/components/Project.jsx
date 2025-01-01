@@ -7,24 +7,21 @@ const projects = [
     title: "ServiceSync (MERN App)",
     tags: ["API", "MVC", "Development"],
     projectLink: "https://servicesync.onrender.com/",
-    projectCode:
-      "https://gitlab.com/uplift-code-camp/students/batch-22/grouping/projects/group-2",
+    projectCode: "https://github.com/JRDF08/Projects/tree/main/MERN%20App",
   },
   {
     imgSrc: "/project-4.png",
     title: "SoundScape (Backend App)",
     tags: ["API", "SPA"],
     projectLink: "https://p4-soundscape.onrender.com",
-    projectCode:
-      "https://gitlab.com/uplift-code-camp/students/batch-22/john-rey-fernandez/projects/-/tree/p4-node-app/p4-node-app?ref_type=heads",
+    projectCode: "https://github.com/JRDF08/Projects/tree/main/Backend%20App",
   },
   {
     imgSrc: "/project-3.png",
     title: "SoundScape (React App)",
     tags: ["Development", "API"],
     projectLink: "https://soundscape-07un.onrender.com",
-    projectCode:
-      "https://gitlab.com/uplift-code-camp/students/batch-22/john-rey-fernandez/projects/-/tree/p3-react-app/p3-react-app",
+    projectCode: "https://github.com/JRDF08/Projects/tree/main/React%20App",
   },
   {
     imgSrc: "/project-2.png",
