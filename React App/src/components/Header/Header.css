@@ -1,0 +1,126 @@
+/* General Header Styling */
+.header-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 15px 7%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.logo {
+  cursor: pointer;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #333;
+  letter-spacing: 2px;
+  transition: color 0.3s ease;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+}
+
+.nav-container a {
+  margin: 0 15px;
+  padding: 10px 15px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #333;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.nav-container a:hover {
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  color: #007bff;
+}
+
+/* Dark Theme */
+.dark .header-container {
+  background-color: #000;
+  color: #fff;
+}
+
+.dark .logo {
+  color: #fff;
+}
+
+.dark .nav-container a {
+  color: #fff;
+}
+
+.dark .nav-container a:hover {
+  background-color: #555;
+  color: #00aced;
+}
+
+/* Light Theme */
+.light .header-container {
+  background-color: #fff;
+  color: #333;
+}
+
+.light .nav-container a {
+  color: #333;
+}
+
+/* Hover Effects */
+.logo:hover {
+  color: #007bff;
+}
+
+.light .logo:hover,
+.dark .logo:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-container {
+    padding: 10px 5%;
+  }
+
+  .nav-container {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    width: 100%;
+    padding: 10px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .nav-container {
+    background-color: #000;
+  }
+
+  .nav-container a {
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 1rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 1.3rem;
+  }
+
+  .nav-container a {
+    font-size: 0.9rem;
+    margin: 0;
+  }
+}
