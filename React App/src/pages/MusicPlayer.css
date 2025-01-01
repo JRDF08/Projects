@@ -1,0 +1,151 @@
+.player-main {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mainColor);
+  position: relative;
+  overflow: hidden;
+}
+.backgroundVideo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  object-fit: cover;
+  height: 100vh;
+  z-index: 0;
+  filter: saturate(2.5);
+}
+.blackScreen {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-color: rgba(17, 17, 17, 0.2);
+  z-index: 1;
+}
+.dark .blackScreen {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-color: rgba(17, 17, 17, 0.5);
+  z-index: 1;
+}
+.player-card {
+  width: 350px;
+  padding: 35px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 36px;
+  box-shadow: 0 0 20px rgba(26, 26, 26, 0.1), 0 0 40px rgba(26, 26, 26, 0.1),
+    0 0 80px rgba(26, 26, 26, 0.2);
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 2;
+  transition: transform 0.3s ease-in-out;
+}
+/* .dark .player-card {
+  background-color: black;
+} */
+.player-card h4 {
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 15px;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+.player-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+.player-icons {
+  color: white;
+  transition: transform 0.2s ease-in-out, color 0.3s ease-in-out;
+  cursor: pointer;
+}
+.player-icons:hover {
+  cursor: pointer;
+  color: #1db954;
+  transform: scale(1.1);
+}
+#songAvatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  animation: animateAvatar 0.6s linear infinite;
+}
+@keyframes animateAvatar {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+.musicTimerDiv {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-weight: 600 px;
+}
+.musicProgressBar {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 6px;
+  height: 10px;
+  border-radius: 5px;
+  outline: none;
+  filter: hue-rotate(20deg);
+}
+
+.changeBgButton {
+  width: 200px;
+  height: 25px;
+  background-color: #eee;
+  position: absolute;
+  border-radius: 0 0 12px 12px;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  transition: 0.3s;
+  color: #eee;
+  cursor: pointer;
+  padding: 3px 0 0 0;
+  font-weight: 600;
+  text-align: center;
+}
+.changeBgButton:hover {
+  height: 30px;
+  color: #222;
+}
+.musicCurrentTime,
+.musicEndTime {
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .player-card {
+    width: 300px;
+    padding: 30px;
+  }
+
+  .player-icons {
+    size: 40px;
+  }
+}
