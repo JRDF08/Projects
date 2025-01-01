@@ -1,0 +1,71 @@
+.about-video {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7);
+}
+
+.about-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.about-content {
+  position: absolute;
+  width: 80%;
+  max-width: 600px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  color: white;
+  margin: 20px;
+  text-align: left;
+}
+
+.about-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.about-content p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+/* Light Mode Styles */
+.light .about-video video {
+  opacity: 0.9;
+  background-color: #cfcfcf;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about-content {
+    width: 90%;
+    margin: 10px;
+  }
+
+  .about-content h1 {
+    font-size: 2rem;
+  }
+
+  .about-content p {
+    font-size: 1rem;
+  }
+}
