@@ -7,8 +7,9 @@ const UploadCardController = {
     try {
       const {
         cardName,
-        cardClass,
-        cardSeries,
+        cardRarity,
+        cardRole,
+        cardNumber,
         cardLife,
         cardCost,
         cardAttribute,
@@ -22,14 +23,15 @@ const UploadCardController = {
 
       const formattedCardName = toTitleCase(cardName);
 
-      const existingCardName = await Upload.findOne({
-        cardName: formattedCardName,
-      });
-      if (existingCardName) {
-        return res
-          .status(400)
-          .send({ message: "Card with this name already exists!" });
-      }
+      // const existingCardName = await Upload.findOne({
+      //   cardName: formattedCardName,
+      // });
+
+      // if (existingCardName) {
+      //   return res
+      //     .status(400)
+      //     .send({ message: "Card with this name already exists!" });
+      // }
 
       const cardUpload = await cloudinary.uploader.upload(req.file.path, {
         folder: "Card Collection",
@@ -38,8 +40,9 @@ const UploadCardController = {
 
       const newUpload = new Upload({
         cardName: formattedCardName,
-        cardClass,
-        cardSeries,
+        cardRarity,
+        cardRole,
+        cardNumber,
         cardLife,
         cardCost,
         cardAttribute,
@@ -49,8 +52,10 @@ const UploadCardController = {
         cardType,
         cardEffect,
         cardSet,
-        imageId: cardUpload.public_id,
-        imageUrl: cardUpload.url,
+        cardImage: {
+          imageId: cardUpload.public_id,
+          imageUrl: cardUpload.url,
+        },
       });
 
       await newUpload.save();

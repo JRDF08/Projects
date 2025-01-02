@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 
+import CardContainer from "./CardContainer.jsx";
+
 const Homepage = () => {
   return (
     <>
@@ -8,6 +10,8 @@ const Homepage = () => {
       <Link to="/add-card">
         <button>Add Card</button>
       </Link>
+
+      <CardContainer />
     </>
   );
 };

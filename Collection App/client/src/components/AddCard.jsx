@@ -5,7 +5,7 @@ const AddCard = () => {
   const [formData, setFormData] = useState({
     cardName: "",
     cardClass: "",
-    cardSeries: "",
+    cardNumber: "",
     cardLife: "",
     cardCost: "",
     cardAttribute: "",
@@ -50,7 +50,7 @@ const AddCard = () => {
         setFormData({
           cardName: "",
           cardClass: "",
-          cardSeries: "",
+          cardNumber: "",
           cardLife: "",
           cardCost: "",
           cardAttribute: "",
@@ -90,75 +90,106 @@ const AddCard = () => {
             placeholder="Enter card name"
           />
         </div>
-        {/* Card Class */}
+        {/* Card Rarity */}
         <div>
           <label className="block text-gray-700 font-medium mb-1">
-            Card Class
+            Card Rarity
+          </label>
+          <select
+            name="cardRarity"
+            value={formData.cardRarity}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-200"
+          >
+            <option value="">Select card rarity</option>
+            <option value="L">Leader</option>
+            <option value="C">Common</option>
+            <option value="UC">Uncommon</option>
+            <option value="R">Rare</option>
+            <option value="SR">Super Rare</option>
+            <option value="SEC">Secret Rare</option>
+            <option value="SP">Special Rare</option>
+          </select>
+        </div>
+        {/* Card Number */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">
+            Card Number
           </label>
           <input
             type="text"
-            name="cardClass"
-            value={formData.cardClass}
+            name="cardNumber"
+            value={formData.cardNumber}
             onChange={handleChange}
             className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="Enter card class"
+            placeholder="Enter card number"
           />
         </div>
-        {/* Card Series */}
+        {/* Card Role */}
         <div>
           <label className="block text-gray-700 font-medium mb-1">
-            Card Series
+            Card Role
           </label>
-          <input
-            type="text"
-            name="cardSeries"
-            value={formData.cardSeries}
+          <select
+            name="cardRole"
+            value={formData.cardRole}
             onChange={handleChange}
             className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="Enter card series"
-          />
+          >
+            <option value="">Select card role</option>
+            <option value="Leader">Leader</option>
+            <option value="Character">Character</option>
+            <option value="Stage">Stage</option>
+            <option value="Event">Event</option>
+          </select>
         </div>
-        {/* Card Life */}
-        <div>
-          <label className="block text-gray-700 font-medium mb-1">
-            Card Life
-          </label>
-          <input
-            type="text"
-            name="cardLife"
-            value={formData.cardLife}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="Enter card life"
-          />
-        </div>
-        {/* Card Cost */}
-        <div>
-          <label className="block text-gray-700 font-medium mb-1">
-            Card Cost
-          </label>
-          <input
-            type="text"
-            name="cardCost"
-            value={formData.cardCost}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="Enter card cost"
-          />
-        </div>
+        {formData.cardRole === "Leader" ? (
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">
+              Card Life
+            </label>
+            <input
+              type="text"
+              name="cardLife"
+              value={formData.cardLife}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-200"
+              placeholder="Enter card life"
+            />
+          </div>
+        ) : (
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">
+              Card Cost
+            </label>
+            <input
+              type="text"
+              name="cardCost"
+              value={formData.cardCost}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-200"
+              placeholder="Enter card cost"
+            />
+          </div>
+        )}
         {/* Card Attribute */}
         <div>
           <label className="block text-gray-700 font-medium mb-1">
             Card Attribute
           </label>
-          <input
-            type="text"
+          <select
             name="cardAttribute"
             value={formData.cardAttribute}
             onChange={handleChange}
             className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="Enter card attribute"
-          />
+          >
+            <option value="">Select card attribute</option>
+            <option value="Slash">Slash</option>
+            <option value="Strike">Strike</option>
+            <option value="Ranged">Ranged</option>
+            <option value="Special">Special</option>
+            <option value="Wisdom">Wisdom</option>
+          </select>
         </div>
         {/* Other Fields */}
         <div>
@@ -191,14 +222,22 @@ const AddCard = () => {
           <label className="block text-gray-700 font-medium mb-1">
             Card Color
           </label>
-          <input
-            type="text"
+          <select
             name="cardColor"
             value={formData.cardColor}
             onChange={handleChange}
             className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-200"
             placeholder="Enter card color"
-          />
+          >
+            <option value="">Select card color</option>
+            <option value="Red">Red</option>
+            <option value="Green">Green</option>
+            <option value="Blue">Blue</option>
+            <option value="Purple">Purple</option>
+            <option value="Black">Black</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Red/Green">Red/Green</option>
+          </select>
         </div>
         <div>
           <label className="block text-gray-700 font-medium mb-1">
@@ -229,14 +268,21 @@ const AddCard = () => {
           <label className="block text-gray-700 font-medium mb-1">
             Card Set
           </label>
-          <input
-            type="text"
+          <select
             name="cardSet"
             value={formData.cardSet}
             onChange={handleChange}
             className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-200"
             placeholder="Enter card set"
-          />
+          >
+            <option value="">Select card set</option>
+            <option value="-ROMANCE DAWN- [OP-01]">
+              -ROMANCE DAWN- [OP-01]
+            </option>
+            <option value="-Paramount War- [OP-02]">
+              -Paramount War- [OP-02]
+            </option>
+          </select>
         </div>
         {/* Upload Image */}
         <div>
@@ -259,15 +305,16 @@ const AddCard = () => {
           >
             Submit
           </button>
-          <button
-            type="submit"
-            onClick={() => navigate("/")}
-            className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
-          >
-            Cancel
-          </button>
         </div>
       </form>
+
+      <button
+        type="submit"
+        onClick={() => navigate("/")}
+        className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+      >
+        Cancel
+      </button>
     </div>
   );
 };
