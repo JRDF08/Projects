@@ -8,7 +8,7 @@ const schema = new mongoose.Schema(
     cardNumber: { type: String, required: true },
     cardLife: Number,
     cardCost: Number,
-    cardAttribute: { type: String, required: true },
+    cardAttribute: String,
     cardPower: Number,
     cardCounter: Number,
     cardColor: { type: String, required: true },

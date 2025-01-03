@@ -3,11 +3,27 @@ import Upload from "../models/uploadModel.js";
 const CardController = {
   list: async (req, res) => {
     try {
-      const card = await Upload.find();
-      res.send(card);
+      const { color, role } = req.query;
+      let query = {};
+
+      if (color) {
+        if (color === "Multicolor") {
+          query.cardColor = { $regex: /.+\/.+/ };
+        } else {
+          query.cardColor = { $regex: new RegExp(`\\b${color}\\b`, "i") };
+        }
+      }
+
+      if (role) {
+        query.cardRole = role;
+      }
+
+      const cards = await Upload.find(query);
+
+      res.send(cards);
     } catch (error) {
-      console.error("Error fetching card:", error);
-      res.status(500).send({ error: "Failed to fetch card" });
+      console.error("Error fetching cards:", error);
+      res.status(500).send({ error: "Failed to fetch cards" });
     }
   },
 };

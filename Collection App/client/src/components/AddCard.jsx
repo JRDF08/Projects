@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddCard = () => {
   const [formData, setFormData] = useState({
@@ -62,12 +64,28 @@ const AddCard = () => {
           cardSet: "",
           cardImage: null,
         });
-        navigate("/");
+        toast.success("Card created successfully!", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+        });
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
       } else {
         const errorData = await response.json();
-        console.error("Error:", errorData);
+        toast.error(`Error: ${errorData.message || "Failed to create card"}`, {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+        });
       }
     } catch (error) {
+      toast.error("Request failed. Please try again later.", {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
       console.error("Request failed:", error);
     }
   };
@@ -108,7 +126,6 @@ const AddCard = () => {
             <option value="R">Rare</option>
             <option value="SR">Super Rare</option>
             <option value="SEC">Secret Rare</option>
-            <option value="SP">Special Rare</option>
           </select>
         </div>
         {/* Card Number */}
@@ -162,62 +179,98 @@ const AddCard = () => {
             <label className="block text-gray-700 font-medium mb-1">
               Card Cost
             </label>
-            <input
-              type="text"
+            <select
               name="cardCost"
               value={formData.cardCost}
               onChange={handleChange}
               className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-200"
               placeholder="Enter card cost"
-            />
+            >
+              <option value="">Select card cost</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
           </div>
         )}
-        {/* Card Attribute */}
-        <div>
-          <label className="block text-gray-700 font-medium mb-1">
-            Card Attribute
-          </label>
-          <select
-            name="cardAttribute"
-            value={formData.cardAttribute}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-200"
-          >
-            <option value="">Select card attribute</option>
-            <option value="Slash">Slash</option>
-            <option value="Strike">Strike</option>
-            <option value="Ranged">Ranged</option>
-            <option value="Special">Special</option>
-            <option value="Wisdom">Wisdom</option>
-          </select>
-        </div>
-        {/* Other Fields */}
-        <div>
-          <label className="block text-gray-700 font-medium mb-1">
-            Card Power
-          </label>
-          <input
-            type="text"
-            name="cardPower"
-            value={formData.cardPower}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="Enter card power"
-          />
-        </div>
-        <div>
-          <label className="block text-gray-700 font-medium mb-1">
-            Card Counter
-          </label>
-          <input
-            type="text"
-            name="cardCounter"
-            value={formData.cardCounter}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="Enter card counter"
-          />
-        </div>
+
+        {formData.cardRole !== "Leader" && formData.cardRole !== "Event" && (
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">
+              Card Counter
+            </label>
+            <select
+              name="cardCounter"
+              value={formData.cardCounter}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-200"
+              placeholder="Enter card counter"
+            >
+              <option value="">Select card counter</option>
+              <option value="1000">1000</option>
+              <option value="2000">2000</option>
+            </select>
+          </div>
+        )}
+
+        {formData.cardRole !== "Event" && (
+          <>
+            {/* Card Attribute */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">
+                Card Attribute
+              </label>
+              <select
+                name="cardAttribute"
+                value={formData.cardAttribute}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-200"
+              >
+                <option value="">Select card attribute</option>
+                <option value="Slash">Slash</option>
+                <option value="Strike">Strike</option>
+                <option value="Ranged">Ranged</option>
+                <option value="Special">Special</option>
+                <option value="Wisdom">Wisdom</option>
+              </select>
+            </div>
+            {/* Other Fields */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">
+                Card Power
+              </label>
+              <select
+                name="cardPower"
+                value={formData.cardPower}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-200"
+                placeholder="Enter card power"
+              >
+                <option value="">Select card power</option>
+                <option value="1000">1000</option>
+                <option value="2000">2000</option>
+                <option value="3000">3000</option>
+                <option value="4000">4000</option>
+                <option value="5000">5000</option>
+                <option value="6000">6000</option>
+                <option value="7000">7000</option>
+                <option value="8000">8000</option>
+                <option value="9000">9000</option>
+                <option value="10000">10000</option>
+                <option value="11000">11000</option>
+                <option value="12000">12000</option>
+              </select>
+            </div>
+          </>
+        )}
+
         <div>
           <label className="block text-gray-700 font-medium mb-1">
             Card Color
@@ -237,6 +290,7 @@ const AddCard = () => {
             <option value="Black">Black</option>
             <option value="Yellow">Yellow</option>
             <option value="Red/Green">Red/Green</option>
+            <option value="Blue/Purple">Blue/Purple</option>
           </select>
         </div>
         <div>
@@ -315,6 +369,9 @@ const AddCard = () => {
       >
         Cancel
       </button>
+
+      {/* Toast Container */}
+      <ToastContainer />
     </div>
   );
 };
