@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
-import FilterByColor from "./FilterByColor.jsx";
-import FilterByRole from "./FilterByRole.jsx";
+// import CardContainer from "./CardContainer";
 import {
   specialLogo,
   rangedLogo,
@@ -10,219 +10,73 @@ import {
   strikeLogo,
 } from "../utils/attributeLogo.js";
 
-const CardContainer = () => {
+const CardPage = () => {
+  const { number } = useParams();
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedColor, setSelectedColor] = useState("");
-  const [selectedRole, setSelectedRole] = useState("");
 
-  const handleCardClick = (card) => {
-    setSelectedCard(card);
-    setShowModal(true);
+  const navigate = useNavigate();
 
-    window.history.pushState(
-      { cardNumber: card.number },
-      `Card ${card.cardName}`,
-      `${card.cardNumber}`
-    );
-
-    //   // navigate(`/card/${card.cardNumber}`, {
-    //   //   state: { cardNumber: card.number },
-    //   // });
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-    setSelectedCard(null);
-
-    window.history.pushState({}, "", "/");
-  };
-
-  const prevCard = () => {
-    setSelectedCard((prev) => {
-      const currentIndex = cards.indexOf(prev);
-      const nextIndex =
-        currentIndex === 0 ? cards.length - 1 : currentIndex - 1;
-      const nextCard = cards[nextIndex];
-
-      window.history.pushState(
-        { cardNumber: nextCard.cardNumber },
-        `Card ${nextCard.cardName}`,
-        `${nextCard.cardNumber}`
-      );
-
-      return nextCard;
-    });
-  };
-
-  const nextCard = () => {
-    setSelectedCard((prev) => {
-      const currentIndex = cards.indexOf(prev);
-      const nextIndex =
-        currentIndex === cards.length - 1 ? 0 : currentIndex + 1;
-      const nextCard = cards[nextIndex];
-
-      window.history.pushState(
-        { cardNumber: nextCard.cardNumber },
-        `Card ${nextCard.cardName}`,
-        `${nextCard.cardNumber}`
-      );
-
-      return nextCard;
-    });
-  };
-
-  const fetchCards = async (color, role) => {
+  const fetchCardByNumber = async (cardNumber) => {
     try {
-      console.log("Fetching cards with:", { color, role });
-      let url = "http://localhost:3000/card/list?";
-
-      if (color) {
-        url += `color=${color}&`;
-      }
-
-      if (role) {
-        url += `role=${role}&`;
-      }
-
-      url = url.endsWith("&") ? url.slice(0, -1) : url;
+      console.log("Fetching cards with number:", cardNumber);
+      const url = `http://localhost:3000/card/list?number=${cardNumber}`;
 
       const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
+        console.log(data);
         setCards(data);
+        if (data.length > 0) {
+          setSelectedCard(data[0]);
+          setShowModal(true);
+        }
       } else {
         console.error("Failed to fetch cards");
       }
     } catch (error) {
-      console.error("Error fetching cards:", error);
+      console.error("Error fetching cards by number:", error);
     }
-  };
-
-  const handleColorChange = (color) => {
-    setSelectedColor(color);
-    fetchCards(color, selectedRole);
-  };
-
-  const handleRoleChange = (role) => {
-    console.log("Role selected:", role);
-    setSelectedRole(role);
-    fetchCards(selectedColor, role);
   };
 
   useEffect(() => {
-    fetchCards();
-  }, []);
+    if (number) {
+      fetchCardByNumber(number);
+    }
+  }, [number]);
 
-  const cardsPerPage = 25;
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedCard(null);
+    navigate("/");
+  };
 
-  const totalPages = Math.ceil(cards.length / cardsPerPage);
-  const startIndex = (currentPage - 1) * cardsPerPage;
-  const currentCards = cards.slice(startIndex, startIndex + cardsPerPage);
+  const adjustCardNumber = (cardNumber, increment = 1) => {
+    const prefix = cardNumber.slice(0, 5);
+    const numberPart = parseInt(cardNumber.slice(5), 10);
+    const newNumber = (numberPart + increment).toString().padStart(3, "0");
+    return `${prefix}${newNumber}`;
+  };
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage((prev) => prev + 1);
+  const prevCard = () => {
+    if (selectedCard) {
+      const newCardNumber = adjustCardNumber(selectedCard.cardNumber, -1);
+      navigate(`/${newCardNumber}`);
     }
   };
 
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
-    }
-  };
-
-  const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
+  const nextCard = () => {
+    if (selectedCard) {
+      const newCardNumber = adjustCardNumber(selectedCard.cardNumber, 1);
+      navigate(`/${newCardNumber}`);
     }
   };
 
   return (
     <>
-      <FilterByColor
-        selectedColor={selectedColor}
-        onColorChange={handleColorChange}
-      />
-      <FilterByRole
-        selectedRole={selectedRole}
-        onRoleChange={handleRoleChange}
-      />
-
-      <div className="w-full mx-auto p-4 bg-gray-100 rounded-lg shadow-lg">
-        <h1 className="text-4xl font-bold text-center text-gray-800 mb-6">
-          Card List
-        </h1>
-        <div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-full max-h-[calc(100vh-100px)] overflow-y-auto mx-auto"
-          style={{ maxHeight: "800px" }}
-        >
-          {currentCards.length > 0 ? (
-            currentCards.map((card, index) => (
-              <div
-                key={index}
-                onClick={() => handleCardClick(card)}
-                className="p-2 bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300 flex flex-col items-center transform hover:translate-y-[-10px]"
-              >
-                <div className="flex items-center justify-center w-full h-full">
-                  <img
-                    src={card.cardImage.imageUrl}
-                    alt={card.cardName}
-                    className="w-full h-auto object-contain rounded-md"
-                  />
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="text-center text-gray-500 col-span-full">
-              No cards available.
-            </p>
-          )}
-        </div>
-
-        {/* Pagination Buttons */}
-        <div className="flex justify-center mt-4">
-          <button
-            onClick={handlePrevPage}
-            disabled={currentPage === 1}
-            className={`px-3 py-2 text-sm rounded-lg ${
-              currentPage === 1
-                ? "bg-gray-300 cursor-not-allowed"
-                : "bg-gray-600 text-white hover:bg-gray-700 hover:shadow-lg transition-all duration-300"
-            }`}
-          >
-            &lt;
-          </button>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-            (page) => (
-              <button
-                key={page}
-                onClick={() => handlePageChange(page)}
-                className={`px-3 py-2 text-sm rounded-lg m-1 ${
-                  page === currentPage
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-300 text-gray-700 hover:bg-gray-400 transition-all duration-300"
-                }`}
-              >
-                {page}
-              </button>
-            )
-          )}
-          <button
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-            className={`px-3 py-2 text-sm rounded-lg ${
-              currentPage === totalPages
-                ? "bg-gray-300 cursor-not-allowed"
-                : "bg-gray-600 text-white hover:bg-gray-700 hover:shadow-lg transition-all duration-300"
-            }`}
-          >
-            &gt;
-          </button>
-
-          {/* Modal */}
+      {selectedCard ? (
+        <>
           {showModal && (
             <div className="fixed inset-0 bg-gray-800 bg-opacity-90 flex justify-center items-center z-50">
               <div className="flex justify-between mt-4 mr-4">
@@ -388,10 +242,12 @@ const CardContainer = () => {
               </div>
             </div>
           )}
-        </div>
-      </div>
+        </>
+      ) : (
+        <p>No card found</p>
+      )}
     </>
   );
 };
 
-export default CardContainer;
+export default CardPage;

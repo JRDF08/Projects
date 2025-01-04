@@ -3,7 +3,7 @@ import Upload from "../models/uploadModel.js";
 const CardController = {
   list: async (req, res) => {
     try {
-      const { color, role } = req.query;
+      const { color, role, number } = req.query;
       let query = {};
 
       if (color) {
@@ -16,6 +16,10 @@ const CardController = {
 
       if (role) {
         query.cardRole = role;
+      }
+
+      if (number) {
+        query.cardNumber = number;
       }
 
       const cards = await Upload.find(query);
