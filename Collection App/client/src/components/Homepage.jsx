@@ -5,11 +5,17 @@ import CardContainer from "./CardContainer.jsx";
 const Homepage = () => {
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Home Page</h1>
+      <div>
+        <Link to="/add-card">
+          <button>Add Card</button>
+        </Link>
+      </div>
 
-      <Link to="/add-card">
-        <button>Add Card</button>
-      </Link>
+      <div>
+        <Link to="/tracker">
+          <button>Tracker</button>
+        </Link>
+      </div>
 
       <CardContainer />
     </>

@@ -291,6 +291,7 @@ const AddCard = () => {
             <option value="Yellow">Yellow</option>
             <option value="Red/Green">Red/Green</option>
             <option value="Blue/Purple">Blue/Purple</option>
+            <option value="Red/Black">Red/Black</option>
           </select>
         </div>
         <div>
