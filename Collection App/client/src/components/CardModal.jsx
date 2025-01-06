@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { toast, ToastContainer } from "react-toastify";
 
 import {
   specialLogo,
@@ -8,10 +9,65 @@ import {
   strikeLogo,
 } from "../utils/attributeLogo";
 
-const CardModal = ({ selectedCard, handleCloseModal, prevCard, nextCard }) => {
-  const handleAddCard = () => {
-    console.log("Add new card button clicked");
-    // Implement your functionality for adding a card here
+const CardModal = ({
+  selectedCard,
+  handleCloseModal,
+  prevCard,
+  nextCard,
+  setCards,
+}) => {
+  const handleAddCard = async (cardNumber) => {
+    try {
+      console.log("Updating card status to 'Yes' for card:", cardNumber);
+
+      const response = await fetch(`http://localhost:3000/card/${cardNumber}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const updatedCard = await response.json();
+
+        if (updatedCard.isAdded === "Yes") {
+          setCards((prevCards) =>
+            prevCards.map((card) =>
+              card.cardNumber === updatedCard.cardNumber ? updatedCard : card
+            )
+          );
+
+          toast.success("Card added successfully!", {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+          });
+
+          setTimeout(() => {
+            handleCloseModal();
+          }, 1000);
+        } else {
+          toast.error("Failed to add card. It may have already been added.", {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+          });
+        }
+      } else {
+        toast.error("Failed to add card. It's already been added.", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+        });
+      }
+    } catch (error) {
+      toast.error("Request failed. Please try again later.", {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
+      console.error("Error updating card status:", error);
+    }
   };
 
   if (!selectedCard) return null;
@@ -150,13 +206,30 @@ const CardModal = ({ selectedCard, handleCloseModal, prevCard, nextCard }) => {
               <strong>Card Set(s)</strong>
               <p>{selectedCard.cardSet}</p>
             </div>
-            <div className="flex justify-center items-center h-full">
+            {/* <div className="flex justify-center items-center h-full">
               <button
-                onClick={handleAddCard}
+                onClick={() => handleAddCard(selectedCard.cardNumber)}
                 className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-all duration-300"
               >
                 Add to Collection
               </button>
+            </div> */}
+            <div className="flex justify-center items-center h-full">
+              {selectedCard && selectedCard.isAdded === "Yes" ? (
+                <button
+                  onClick={() => console.log("removed")}
+                  className="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition-all duration-300"
+                >
+                  Remove from Collection
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleAddCard(selectedCard.cardNumber)} // Assuming you have a function to add the card
+                  className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-all duration-300"
+                >
+                  Add to Collection
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -177,6 +250,7 @@ const CardModal = ({ selectedCard, handleCloseModal, prevCard, nextCard }) => {
           Next
         </button>
       </div>
+      <ToastContainer />
     </div>
   );
 };
@@ -203,6 +277,7 @@ CardModal.propTypes = {
   handleCloseModal: PropTypes.func.isRequired,
   prevCard: PropTypes.func.isRequired,
   nextCard: PropTypes.func.isRequired,
+  setCards: PropTypes.func.isRequired,
 };
 
 export default CardModal;

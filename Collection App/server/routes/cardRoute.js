@@ -8,5 +8,6 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 router.get("/list", CardController.list);
+router.put("/:cardNumber", CardController.updateIsAdded);
 
 export default router;

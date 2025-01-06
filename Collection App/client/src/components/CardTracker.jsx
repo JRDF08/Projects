@@ -1,51 +1,147 @@
 import { useState, useEffect } from "react";
-import CardPlaceholder from "./CardPlaceholder"; // Import the placeholder component
+
+import Card from "./Card.jsx";
+import CardModal from "./CardModal.jsx";
+import Pagination from "./Pagination.jsx";
 
 const CardTracker = () => {
   const [cards, setCards] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [collectedCards, setCollectedCards] = useState([]); // Store the cards user has collected
+  const [totalCards, setTotalCards] = useState(0);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  // Example of cards that have been collected (can be fetched from a server or DB)
-  const allCards = [
-    { id: 1, name: "Card 1", imageUrl: "https://via.placeholder.com/150" },
-    { id: 2, name: "Card 2", imageUrl: "https://via.placeholder.com/150" },
-    { id: 3, name: "Card 3", imageUrl: "https://via.placeholder.com/150" },
-    // More cards...
-  ];
+  const fetchCards = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/card/list?isAdded=Yes"
+      );
+      if (response.ok) {
+        const fetchedCards = await response.json();
+        setCards(fetchedCards);
+        setTotalCards(fetchedCards.length);
+        console.error("Failed to fetch cards");
+      }
+    } catch (error) {
+      console.error("Error fetching cards:", error);
+    }
+  };
 
   useEffect(() => {
-    // Simulate fetching cards
-    setTimeout(() => {
-      // Assuming the user has collected some cards
-      setCollectedCards([allCards[0], allCards[2]]);
-      setIsLoaded(true);
-    }, 2000); // Simulating a 2-second load time
+    fetchCards();
   }, []);
 
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
+    setShowModal(true);
+
+    window.history.pushState(
+      { cardNumber: card.number },
+      `Card ${card.cardName}`,
+      `${card.cardNumber}`
+    );
+  };
+
+  const cardsPerPage = 25;
+
+  const filteredCards = cards.filter((card) => card.isAdded === "Yes");
+
+  const totalPages = Math.ceil(filteredCards.length / cardsPerPage);
+  const startIndex = (currentPage - 1) * cardsPerPage;
+  const currentCards = filteredCards.slice(
+    startIndex,
+    startIndex + cardsPerPage
+  );
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedCard(null);
+
+    window.history.pushState({}, "", "/");
+  };
+
+  const prevCard = () => {
+    setSelectedCard((prev) => {
+      const currentIndex = filteredCards.indexOf(prev);
+      const nextIndex =
+        currentIndex === 0 ? filteredCards.length - 1 : currentIndex - 1;
+      const nextCard = filteredCards[nextIndex];
+
+      window.history.pushState(
+        { cardNumber: nextCard.cardNumber },
+        `Card ${nextCard.cardName}`,
+        `${nextCard.cardNumber}`
+      );
+
+      return nextCard;
+    });
+  };
+
+  const nextCard = () => {
+    setSelectedCard((prev) => {
+      const currentIndex = filteredCards.indexOf(prev);
+      const nextIndex =
+        currentIndex === filteredCards.length - 1 ? 0 : currentIndex + 1;
+      const nextCard = filteredCards[nextIndex];
+
+      window.history.pushState(
+        { cardNumber: nextCard.cardNumber },
+        `Card ${nextCard.cardName}`,
+        `${nextCard.cardNumber}`
+      );
+
+      return nextCard;
+    });
+  };
+
+  console.log("Filtered cards: ", filteredCards);
+
   return (
-    <div className="grid grid-cols-3 gap-4">
-      {allCards.map((card) => (
+    <div>
+      <div className="w-full mx-auto p-4 bg-gray-100 rounded-lg shadow-lg">
+        <div className="flex justify-between mb-4">
+          <span className="text-gray-700">
+            Total Cards: {filteredCards.length}
+          </span>
+        </div>
         <div
-          key={card.id}
-          className="w-40 h-60 p-4 bg-gray-200 rounded-lg shadow-lg"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-full max-h-[calc(100vh-100px)] overflow-y-auto mx-auto"
+          style={{ maxHeight: "800px" }}
         >
-          {collectedCards.some(
-            (collectedCard) => collectedCard.id === card.id
-          ) ? (
-            <div
-              className="w-full h-full bg-cover bg-center rounded-md"
-              style={{ backgroundImage: `url(${card.imageUrl})` }}
-            ></div>
+          {currentCards.length > 0 ? (
+            currentCards.map((card) => (
+              <Card
+                key={card.cardNumber}
+                card={card}
+                handleCardClick={handleCardClick}
+              />
+            ))
           ) : (
-            <CardPlaceholder
-              isLoaded={isLoaded}
-              imageUrl={card.imageUrl}
-              cardName={card.name}
-            />
+            <p className="text-center text-gray-500 col-span-full">
+              No cards available.
+            </p>
           )}
         </div>
-      ))}
+
+        <CardModal
+          selectedCard={selectedCard}
+          handleCloseModal={handleCloseModal}
+          prevCard={prevCard}
+          nextCard={nextCard}
+        />
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePageChange={handlePageChange}
+        />
+      </div>
     </div>
   );
 };

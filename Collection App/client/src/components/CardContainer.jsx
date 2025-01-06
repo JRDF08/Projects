@@ -182,6 +182,7 @@ const CardContainer = () => {
           handleCloseModal={handleCloseModal}
           prevCard={prevCard}
           nextCard={nextCard}
+          setCards={setCards}
         />
 
         <Pagination

@@ -19,6 +19,7 @@ const schema = new mongoose.Schema(
       imageId: { type: String, required: true },
       imageUrl: { type: String, required: true },
     },
+    isAdded: { type: String, default: "No" },
   },
   {
     timestamps: true,
