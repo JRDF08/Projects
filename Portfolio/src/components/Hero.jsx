@@ -31,15 +31,14 @@ const Hero = () => {
           </h2>
           <div className="flex items-center gap-3">
             <ButtonPrimary
-              href="/cv.pdf"
-              label="Download CV"
-              icon="download"
-              download={true}
-            />
-            <ButtonPrimary
               label="Preview CV"
               icon="visibility"
               onClick={() => window.open("/cv.pdf", "_blank")}
+            />
+            <ButtonPrimary
+              label="Preview Cert"
+              icon="visibility"
+              onClick={() => window.open("/JRDF.png", "_blank")}
             />
             <ButtonOutline
               href="#about"
