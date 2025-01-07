@@ -4,29 +4,29 @@ import ProjectCard from "./ProjectCard";
 const projects = [
   {
     imgSrc: "/project-5.png",
-    title: "ServiceSync (MERN App)",
-    tags: ["API", "MVC", "Development"],
+    title: "ServiceSync",
+    tags: ["Node.js", "MongoDB", "Express", "React", "TailwindCSS", "shadcn"],
     projectLink: "https://servicesync.onrender.com/",
     projectCode: "https://github.com/JRDF08/Projects/tree/main/MERN%20App",
   },
   {
     imgSrc: "/project-4.png",
-    title: "SoundScape (Backend App)",
-    tags: ["API", "SPA"],
+    title: "SoundScape",
+    tags: ["Node.js", "Express", "MongoDb", "React", "TailwindCSS"],
     projectLink: "https://p4-soundscape.onrender.com",
     projectCode: "https://github.com/JRDF08/Projects/tree/main/Backend%20App",
   },
   {
     imgSrc: "/project-3.png",
-    title: "SoundScape (React App)",
-    tags: ["Development", "API"],
+    title: "SoundScape",
+    tags: ["React"],
     projectLink: "https://soundscape-07un.onrender.com",
     projectCode: "https://github.com/JRDF08/Projects/tree/main/React%20App",
   },
   {
     imgSrc: "/project-2.png",
-    title: "SoundScape (Vanilla JS App)",
-    tags: ["Development", "API"],
+    title: "SoundScape",
+    tags: ["Javascript"],
     projectLink: "https://soundscape-86ox.onrender.com/",
     projectCode:
       "https://github.com/JRDF08/Projects/tree/main/Vanilla%20JS%20App",
@@ -34,7 +34,7 @@ const projects = [
   {
     imgSrc: "/project-1.png",
     title: "Web Dev Portfolio",
-    tags: ["Web-design", "Development"],
+    tags: ["React"],
     projectLink: "https://portfolio-clwv.onrender.com/",
     projectCode: "https://github.com/JRDF08/Projects/tree/main/Portfolio",
   },

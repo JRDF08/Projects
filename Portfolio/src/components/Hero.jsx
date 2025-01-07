@@ -8,7 +8,7 @@ const Hero = () => {
       <div className="container lg:grid lg:grid-cols-2 items-center lg:gap-10">
         <div>
           <div className="flex items-center gap-3">
-            <figure className="img-box w-9 h-9 rounded-lg">
+            {/* <figure className="img-box w-9 h-9 rounded-lg">
               <img
                 src="/avatar1.jpg"
                 width={40}
@@ -16,7 +16,7 @@ const Hero = () => {
                 alt="John Rey Fernandez Avatar"
                 className="img-cover"
               />
-            </figure>
+            </figure> */}
 
             <div className="flex items-center gap-1.5 text-slate-400 text-sm tracking-wide">
               <span className="relative w-2 h-2 rounded-full bg-emerald-400">
@@ -31,9 +31,14 @@ const Hero = () => {
           </h2>
           <div className="flex items-center gap-3">
             <ButtonPrimary
-              label="Preview CV"
-              icon="visibility"
-              onClick={() => window.open("/cv.pdf", "_blank")}
+              label="Download CV"
+              icon="download"
+              onClick={() => {
+                const link = document.createElement("a");
+                link.href = "/jrdf.pdf";
+                link.download = "jrdf_cv.pdf";
+                link.click();
+              }}
             />
             <ButtonPrimary
               label="Preview Cert"
