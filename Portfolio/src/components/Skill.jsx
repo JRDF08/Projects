@@ -18,6 +18,11 @@ const skillItem = [
     desc: "Git Repository",
   },
   {
+    imgSrc: "/github.png",
+    label: "Github",
+    desc: "Git Repository",
+  },
+  {
     imgSrc: "/css.png",
     label: "CSS",
     desc: "User Interface",
@@ -35,6 +40,11 @@ const skillItem = [
   {
     imgSrc: "/react.png",
     label: "React",
+    desc: "Library",
+  },
+  {
+    imgSrc: "/angular.png",
+    label: "Angular",
     desc: "Framework",
   },
   {
